@@ -1,0 +1,16 @@
+[package]
+name = "trailblazer"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "trailblazer"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5.16", features = ["derive"] }
+scout-interpreter = { path = "../scout/scout-interpreter/" }
+scout-parser = { path = "../scout/scout-parser/" }
+tokio = { version = "1", features = ["full"] }
+futures = "0.3.30"
+colored = "2.1.0"

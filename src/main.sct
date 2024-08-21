@@ -1,0 +1,28 @@
+// This file is the main content of the Trailblazer loop.
+// It is ran on every URL visited and is responsible for
+// loading and executing Trailblazer modules. Modules can use
+// the blaze function to add URLs to the Trailblazer stack.
+
+global __tbUrls = []
+global def blaze(url) do
+    print("🔥 Adding URL to be blazed: " + url)
+    push(__tbUrls, url)
+end
+
+use trailblazer
+
+found = false
+
+// This is inserted to the env by Trailblazer
+goto __startUrl
+
+for mod in trailblazer do
+    if mod[1]::sign(url()) do
+        name = mod[0]
+        print("🔎 Found page type " + name)
+        found = true
+        mod[1]::trail()
+    end
+end
+
+[found, __tbUrls]

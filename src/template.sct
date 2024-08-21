@@ -1,0 +1,8 @@
+def sign(url) do
+  // insert code that determines whether to follow this trail
+  return false
+end
+
+def trail() do
+  // insert code that is executed if the sign is followed
+end
