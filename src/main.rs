@@ -7,7 +7,6 @@ use std::{
 };
 
 use clap::Parser;
-use colored::Colorize;
 use futures::lock::Mutex;
 use scout_interpreter::{
     builder::InterpreterBuilder,
@@ -18,6 +17,13 @@ use scout_parser::ast::Identifier;
 
 const TEMPLATE: &str = include_str!("template.sct");
 const MAIN: &str = include_str!("main.sct");
+const LOGO: &str = r#"
+ ______         _ ____   __                
+/_  __/______ _(_) / /  / /__ ____ ___ ____
+ / / / __/ _ `/ / / _ \/ / _ `/_ // -_) __/
+/_/ /_/  \_,_/_/_/_.__/_/\_,_//__/\__/_/   
+                                           
+"#;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -28,14 +34,7 @@ struct Args {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
-    println!("\n        =================================================");
-    println!("        =================               =================");
-    println!(
-        "        ================   {}   ================",
-        "Trailblazer".green()
-    );
-    println!("        =================               =================");
-    println!("        =================================================\n");
+    println!("\n{LOGO}\n");
     println!("🌲🌳🌲 Starting our trail search at {} 🌲🌳🌲\n", args.url);
 
     if !Path::new("trailblazer").exists() {
@@ -115,7 +114,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    println!("You've ended up at your destination. Exiting!");
+    println!("You appear to be at your destination. Exiting!");
 
     inter.close().await;
     Ok(())
