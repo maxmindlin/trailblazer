@@ -17,7 +17,7 @@ found = false
 goto __startUrl
 
 for mod in trailblazer do
-    if mod[1]::sign(url()) do
+    if mod[1]::sign() do
         name = mod[0]
         print("🔎 Found page type " + name)
         found = true

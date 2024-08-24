@@ -65,7 +65,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .set(&internal_start_url, Arc::new(Object::Str(next.clone())))
             .await;
         let res = inter.eval(MAIN).await.unwrap();
-        visited.insert(next);
 
         // we know the output of the main.sct file since we fully control it.
         let parsed = <Object as ParseObj<Vec<Arc<Object>>>>::parse_obj(&res)
@@ -93,10 +92,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             println!("✅");
             println!("Please update this file with any sign or trail logic!");
-            break;
+
+            print!("\nContinue? (y/n): ");
+            let _ = stdout().flush();
+            let mut confirm = String::new();
+            stdin().read_line(&mut confirm)?;
+
+            confirm = confirm.trim().to_string();
+            if confirm.to_lowercase() != "y" {
+                break;
+            }
+
+            // Add it back to the stack so that we revisit it
+            stack.push(url);
         } else {
             // A sign function did match the current URL and potentially
             // returned additional URLs to be visited.
+            visited.insert(next);
             let next_url_objs = <Object as ParseObj<Vec<Arc<Object>>>>::parse_obj(&parsed[1])
                 .await
                 .unwrap();

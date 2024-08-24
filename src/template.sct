@@ -1,4 +1,4 @@
-def sign(url) do
+def sign() do
   // insert code that determines whether to follow this trail
   return false
 end
